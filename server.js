@@ -1,6 +1,7 @@
 var inquirer = require("inquirer");
 var ct = require("console.table");
 const connection = require("./connection");
+const { isBuffer } = require("util");
 
 async function init() {
     inquirer.prompt({
@@ -64,7 +65,12 @@ function viewDept() {
 }
 
 function viewRole() {
-
+    connection.query("SELECT * FROM role",
+    function(err, res) {
+        console.table(res);
+        if (err) throw err;
+        init();
+    });
 }
 
 function addEmp() {
