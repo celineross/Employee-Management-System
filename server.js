@@ -54,7 +54,12 @@ function viewEmp() {
 }
 
 function viewDept() {
-    
+    connection.query("SELECT * FROM department",
+    function (err, res) {
+        console.table(res);
+        if (err) throw err;
+        init();
+    });
 
 }
 
