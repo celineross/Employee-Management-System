@@ -56,25 +56,67 @@ function viewEmp() {
 
 function viewDept() {
     connection.query("SELECT * FROM department",
-    function (err, res) {
-        console.table(res);
-        if (err) throw err;
-        init();
-    });
+        function (err, res) {
+            console.table(res);
+            if (err) throw err;
+            init();
+        });
 
 }
 
 function viewRole() {
     connection.query("SELECT * FROM role",
-    function(err, res) {
-        console.table(res);
-        if (err) throw err;
-        init();
-    });
+        function (err, res) {
+            console.table(res);
+            if (err) throw err;
+            init();
+        });
 }
 
 function addEmp() {
-
+    connection.query("SELECT * FROM role",
+        function (err, res) {
+            if (err) throw err;
+            inquirer.prompt([{
+                name: "first_name",
+                type: "input",
+                message: "First name: "
+            },
+            {
+                name: "last_name",
+                type: "input",
+                message: "Last name: "
+            },
+            {
+                name: "role",
+                type: "list",
+                message: "Job Title: ",
+                choices: function () {
+                    var roles = [];
+                    for (var i = 0; i < res.length; i++) {
+                        roles.push(res[i].title);
+                    }
+                    return roles;
+                },
+            }]).then(function (userResponse) {
+                var roleID = [];
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].title === userResponse.roleID) {
+                        roleID = res[i].id;
+                    }
+                }
+                connection.query("INSERT INTO employee SET ?",
+                    {
+                        first_name: userResponse.first_name,
+                        last_name: userResponse.last_name,
+                        role_id: roleID
+                    },
+                    function (err) {
+                        if (err) throw err;
+                        init();
+                    });
+            });
+        });
 }
 
 function addDept() {
