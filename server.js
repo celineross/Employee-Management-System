@@ -77,45 +77,46 @@ function addEmp() {
     connection.query("SELECT * FROM role",
         function (err, res) {
             if (err) throw err;
-            inquirer.prompt([{
-                name: "first_name",
-                type: "input",
-                message: "First name: "
-            },
-            {
-                name: "last_name",
-                type: "input",
-                message: "Last name: "
-            },
-            {
-                name: "role",
-                type: "list",
-                message: "Job Title: ",
-                choices: function () {
-                    var roles = [];
-                    for (var i = 0; i < res.length; i++) {
-                        roles.push(res[i].title);
-                    }
-                    return roles;
+            inquirer.prompt([
+                {
+                    name: "first_name",
+                    type: "input",
+                    message: "First name: "
                 },
-            }]).then(function (userResponse) {
-                var roleID = [];
-                for (var i = 0; i < res.length; i++) {
-                    if (res[i].title === userResponse.roleID) {
-                        roleID = res[i].id;
-                    }
-                }
-                connection.query("INSERT INTO employee SET ?",
-                    {
-                        first_name: userResponse.first_name,
-                        last_name: userResponse.last_name,
-                        role_id: roleID
+                {
+                    name: "last_name",
+                    type: "input",
+                    message: "Last name: "
+                },
+                {
+                    name: "role",
+                    type: "list",
+                    message: "Job Title: ",
+                    choices: function () {
+                        var roles = [];
+                        for (var i = 0; i < res.length; i++) {
+                            roles.push(res[i].title);
+                        }
+                        return roles;
                     },
-                    function (err) {
-                        if (err) throw err;
-                        init();
-                    });
-            });
+                }]).then(function (userResponse) {
+                    var roleID = [];
+                    for (var i = 0; i < res.length; i++) {
+                        if (res[i].title === userResponse.role) {
+                            roleID = res[i].id;
+                        }
+                    }
+                    connection.query("INSERT INTO employee SET ?",
+                        {
+                            first_name: userResponse.first_name,
+                            last_name: userResponse.last_name,
+                            role_id: roleID
+                        },
+                        function (err) {
+                            if (err) throw err;
+                            init();
+                        });
+                });
         });
 }
 
