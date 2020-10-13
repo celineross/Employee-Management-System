@@ -2,7 +2,7 @@ var inquirer = require("inquirer");
 var ct = require("console.table");
 const connection = require("./connection");
 
-async function start() {
+async function init() {
     inquirer.prompt({
         type: "list",
         message: "Choose an option below: ",
@@ -16,18 +16,55 @@ async function start() {
             "Add role",
             "Exit"
         ]
-    })
-    .then(function(result) {
+    }).then(function (result) {
         switch (result.options) {
-            // case "View employees":
-            // case "View departments":
-            // case "View roles":
-            // case "Add employee":
-            // case "Add department":
-            // case "Add role":
+            case "View employees":
+                return viewEmp();
+                break;
+            case "View departments":
+                return viewDept();
+                break;
+            case "View roles":
+                return viewRole();
+                break;
+            case "Add employee":
+                return addEmp();
+                break;
+            case "Add department":
+                return addDept();
+                break;
+            case "Add role":
+                return addRole();
+                break;
             case "Exit":
-            connection.end();
-            break;
+                connection.end();
+                break;
         }
-    })
+    });
 }
+
+function viewEmp() {
+
+}
+
+function viewDept() {
+
+}
+
+function viewRole() {
+
+}
+
+function addEmp() {
+
+}
+
+function addDept() {
+
+}
+
+function addRole() {
+
+}
+
+init();
