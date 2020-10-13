@@ -50,10 +50,11 @@ function viewEmp() {
             console.table(res);
             if (err) throw err;
             init();
-        })
+        });
 }
 
 function viewDept() {
+    
 
 }
 
