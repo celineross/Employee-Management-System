@@ -1,6 +1,9 @@
 # Employee-Management-System
 
 ## Working App
+<iframe src="https://drive.google.com/file/d/10hdQRAYCjrn_5ntfNQD8rX8RjtcMShWr/preview" width="640" height="480"></iframe>
+<br>
+<a href ="https://github.com/celineross/Employee-Management-System">GitHub Repository</a>
 
 ## Author
 <p>Celine Ross</p>
