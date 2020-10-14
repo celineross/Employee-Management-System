@@ -1,8 +1,10 @@
+//requirements
 var inquirer = require("inquirer");
 var ct = require("console.table");
 const connection = require("./connection");
-const { isBuffer } = require("util");
+const { connect } = require("./connection");
 
+//initialize program
 async function init() {
     inquirer.prompt({
         type: "list",
@@ -17,6 +19,7 @@ async function init() {
             "Add role",
             "Exit"
         ]
+        //switch case statements for user options
     }).then(function (result) {
         switch (result.options) {
             case "View employees":
@@ -43,7 +46,7 @@ async function init() {
         }
     });
 }
-
+//function to view all employees
 function viewEmp() {
     connection.query(
         "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id",
@@ -53,7 +56,7 @@ function viewEmp() {
             init();
         });
 }
-
+//function to view all departments
 function viewDept() {
     connection.query("SELECT * FROM department",
         function (err, res) {
@@ -63,7 +66,7 @@ function viewDept() {
         });
 
 }
-
+//function to view all roles
 function viewRole() {
     connection.query("SELECT * FROM role",
         function (err, res) {
@@ -72,7 +75,7 @@ function viewRole() {
             init();
         });
 }
-
+//function to add an employee
 function addEmp() {
     connection.query("SELECT * FROM role",
         function (err, res) {
@@ -92,6 +95,7 @@ function addEmp() {
                     name: "role",
                     type: "list",
                     message: "Job Title: ",
+                    //loop through the response and return the list of roles
                     choices: function () {
                         var roles = [];
                         for (var i = 0; i < res.length; i++) {
@@ -99,6 +103,7 @@ function addEmp() {
                         }
                         return roles;
                     },
+                //match chosen role to its corresponding index
                 }]).then(function (userResponse) {
                     var roleID = [];
                     for (var i = 0; i < res.length; i++) {
@@ -119,13 +124,26 @@ function addEmp() {
                 });
         });
 }
-
+//function to add a department
 function addDept() {
-
+    inquirer.prompt([{
+        name: "department",
+        type: "input",
+        message: "New Department: "
+    },
+    ]).then(function (res) {
+        connection.query("INSERT INTO department (name) VALUES (?)",
+            [res.department],
+            function (err, data) {
+                if (err) throw err;
+                console.table(res);
+                init();
+            });
+    });
 }
-
+//function to add a role
 function addRole() {
-
+    
 }
 
 init();
