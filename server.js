@@ -2,7 +2,6 @@
 var inquirer = require("inquirer");
 var ct = require("console.table");
 const connection = require("./connection");
-const { connect } = require("./connection");
 
 //initialize program
 async function init() {
@@ -103,7 +102,7 @@ function addEmp() {
                         }
                         return roles;
                     },
-                //match chosen role to its corresponding index
+                    //match chosen role to its corresponding index
                 }]).then(function (userResponse) {
                     var roleID = [];
                     for (var i = 0; i < res.length; i++) {
@@ -134,7 +133,7 @@ function addDept() {
     ]).then(function (res) {
         connection.query("INSERT INTO department (name) VALUES (?)",
             [res.department],
-            function (err, data) {
+            function (err) {
                 if (err) throw err;
                 console.table(res);
                 init();
@@ -143,7 +142,29 @@ function addDept() {
 }
 //function to add a role
 function addRole() {
-    
+    inquirer.prompt([{
+        name: "title",
+        type: "input",
+        message: "New role: "
+    },
+    {
+        name: "salary",
+        type: "input",
+        message: "Salary: "
+    },
+    {
+        name: "department_id",
+        type: "input",
+        message: "Department ID: "
+    }]).then(function(res) {
+        connection.query("INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
+        [res.title, res.salary, res.department_id],
+        function(err) {
+            if (err) throw err;
+            console.table(res);
+            init();
+        });
+    });
 }
 
 init();
