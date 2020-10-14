@@ -1,9 +1,8 @@
 # Employee-Management-System
 
 ## Working App
-<a href = "https://drive.google.com/file/d/10hdQRAYCjrn_5ntfNQD8rX8RjtcMShWr/preview">Video of Functional App</a>
+![Employee Tracker](gif/working.gif)
 <br>
-
 <a href ="https://github.com/celineross/Employee-Management-System">GitHub Repository</a>
 
 ## Author
