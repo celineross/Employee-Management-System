@@ -1,8 +1,7 @@
 # Employee-Management-System
 
 ## Working App
-<iframe src="https://drive.google.com/file/d/10hdQRAYCjrn_5ntfNQD8rX8RjtcMShWr/preview" width="640" height="480"></iframe>
-
+<a href = "https://drive.google.com/file/d/10hdQRAYCjrn_5ntfNQD8rX8RjtcMShWr/preview">Video of Functional App</a>
 <br>
 
 <a href ="https://github.com/celineross/Employee-Management-System">GitHub Repository</a>
